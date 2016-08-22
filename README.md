@@ -1,1 +1,1 @@
-# Domain Level Model - changed from OOP
+Domain Level Model of Dannenberg et al.
