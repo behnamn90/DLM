@@ -1,1 +1,1 @@
-# Domain Level Model
+# Domain Level Model of Dannenberg et al.
