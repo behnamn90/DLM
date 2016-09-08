@@ -5,7 +5,7 @@ g++ ${1}.cpp -I ~/CODE/Libraries/Boost/boost_1_58_0/ -o ../bin/${1}
 cd ../Output
 for i in *.gv; do
 	j="$(echo $i | sed -e 's/\(.gv\)*$//g')"
-	neato -Tbmp ${j}.gv -o ${j}_neato.bmp
+	neato -Tpng ${j}.gv -o ${j}_neato.png
 	#fdp -Tbmp ${j}.gv -o ${j}_fdp.bmp
 	#patchwork -Tbmp ${j}.gv -o ${j}_patchwork.bmp
 	#dot -Tbmp ${j}.gv -o ${j}_dot.bmp
