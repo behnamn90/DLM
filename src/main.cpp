@@ -1,15 +1,17 @@
 #include "common.h"
 #include "constants.h"
 #include "design.h"
+#include "graph.h"
 //#include "bundled.h"
 //#include "SSA.h"
 //#include "rates.h"
 
 
 int main() {
-	int n_vertices = 166; //including zeroth vertex
 	Tile tile;
 	tile.print_domains();
+	MyGraph g(tile);
+
 }
 
 

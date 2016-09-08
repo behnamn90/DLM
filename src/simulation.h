@@ -1,3 +1,55 @@
+struct VertexProperty{
+	int id;
+	vector<int> pair_id; // eg 12 is connected by two crossovers
+	vector<string> pair_type; //i: inside-crossover, o: outside-crossover
+};
+struct EdgeProperty{
+	int id;
+	int length;
+	double weight;
+	string type; //s: single-stranded, d: double-stranded, i: inside-crossover, o: outside-crossover, m: seam-crossover
+	string colour;
+	string thickness;
+	vector<pair<int,int> > pair_id; //no need for vec
+   	vector<string> pair_type; //i: inside-crossover, o: outside-crossover, m: seam-crossover
+};
+typedef adjacency_list<vecS, vecS, undirectedS, VertexProperty, EdgeProperty > Graph;
+typedef vector< vector< graph_traits<Graph>::edge_descriptor > > Embedding; //for embeddings 
+typedef graph_traits<Graph>::vertex_iterator Vertex_iter;
+typedef graph_traits<Graph>::edge_iterator Edge_iter;
+typedef graph_traits<Graph>::vertex_descriptor Vertex_desc;
+typedef graph_traits<Graph>::edge_descriptor Edge_desc;
+
+template <class Graph> void reset_vertex_index(Graph& g) { //no real need... just use get(vertex_index, g)
+	Vertex_iter vi,vf;
+	int i = 0;
+	for(tie(vi,vf) = vertices(g); vi != vf; ++vi) {
+		g[*vi].id = i;
+		i++;
+	}
+}
+template <class Graph> void reset_edge_index(Graph& g) {
+	Edge_iter ei,ef;
+	boost::tie( ei, ef) = boost::edges(g);
+	int i = 0;
+	for ( ; ei != ef ; ++ei ){
+		g[*ei].id = i;
+		i++;
+	}
+}
+template <class Graph> void add_domains(Graph& g) { 
+	Vertex_iter vi,vf;
+	EdgeProperty EP, EP_long; 
+	EP.type = "s"; EP_long.type = "s";
+	EP.length = default_domain_size; EP_long.length = default_domain_size * 2;
+	for(boost::tie(vi,vf) = vertices(g); vi != vf; ++vi) {
+		add_edge(*vi, *vi + 1, EP, g);
+	}
+	add_edge(num_vertices(g)-1, 0, EP_long, g);
+	pair<Edge_desc, bool> edgePair = edge(82, 83, g);
+	Edge_desc en = edgePair.first;
+	g[en].length = default_domain_size * 2;
+}
 double Temp(double& time) {
 	double result;
 	int n_intervals = t_max;

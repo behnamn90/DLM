@@ -31,7 +31,6 @@ template <class Graph> void reset_vertex_index(Graph& g) { //no real need... jus
 	for(tie(vi,vf) = vertices(g); vi != vf; ++vi) {
 		g[*vi].id = i;
 		i++;
-		//cout << *ei << endl;
 	}
 }
 template <class Graph> void reset_edge_index(Graph& g) {
@@ -42,7 +41,6 @@ template <class Graph> void reset_edge_index(Graph& g) {
 	for ( ; ei != ef ; ++ei ){
 		g[*ei].id = i;
 		i++;
-		//cout << *ei << endl;
 	}
 }
 template <class Graph> void add_domains(Graph& g) { 

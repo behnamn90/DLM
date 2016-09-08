@@ -1,10 +1,9 @@
-
 class Domain {
 	public:
 		int source; int target;
-		vector<int> bond_pairs;
+		vector<int> cross_pairs;
 		vector<int> stack_pairs;
-		string type;
+		int length;
 		string seq;
 };
 class Crossover {
@@ -12,46 +11,50 @@ class Crossover {
 		int v_a; int v_b;
 		int d_a; int d_b;
 		int d_a1; int d_a2; int d_b1; int d_b2;
-		string type;
+		string type;  //i: inside, o: outside, m: seam
 };
-void fill_domains(vector<Domain>& domains, int& n_domains){
-	Domain d;
-	for(int i=0; i<n_domains; i++){
-		d.source = i;d.target=i+1;
+void fill_domains(vector<Domain>& domains, int& n_vertices){
+	Domain d; d.length = default_domain_size; 
+	for(int i=0; i<n_vertices-1; i++){
+		d.source = i; d.target = i+1;
 		domains.push_back(d);
 	}
+	d.source = n_vertices-1; d.target = 0;
+	domains.push_back(d);
+	domains[82].length *= 2; 
+	domains[165].length *= 2; 
 	int d1, d2;
 	d1 = 1;
 	d2 = 10;
-	domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+	domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 	for (int L = 0; L < 11; L++){
 		for (int l = 0; l < 3; l++){	
 			if (L==0 && l==0){continue;}
 			d1 = d1 + 2;
 			d2 = d2 - 2;
-			domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+			domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 		}
 		if (L%2 != 0) {d1 = d1 + 2; d2 = d2 + 12;}
 		else {d2 = d2 + 14;}	
 	}
 	d1 = 84;
 	d2 = 93; 
-	domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+	domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 	for (int L = 0; L < 11; L++){
 		for (int l = 0; l < 3; l++){	
 			if (L==0 && l==0){continue;}
 			d1 = d1 + 2;
 			d2 = d2 - 2;
-			domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+			domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 		}
 		if (L%2 != 0) {d1 = d1 + 2; d2 = d2 + 12;}
 		else {d2 = d2 + 14;}	
 	}
 	d1=12; d2=152;
 	for (int i=0; i<5; i++){
-		domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+		domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 		d1+=1; d2-=1;
-		domains[d1].bond_pairs.push_back(d2); domains[d2].bond_pairs.push_back(d1);
+		domains[d1].cross_pairs.push_back(d2); domains[d2].cross_pairs.push_back(d1);
 		d1+=13; d2-=13;
 	}
 }
@@ -140,9 +143,9 @@ class Tile {
 
 void Tile::print_domains () {
 	for (vector<Domain>::iterator d = domains.begin(); d != domains.end(); ++d) {
-		cout << distance(domains.begin(), d) << " (" << (*d).source << "," << (*d).target << ")\t" << (*d).type;
-		cout << "\tbond_pairs:\t";
-		for (vector<int>::iterator bp = (*d).bond_pairs.begin(); bp != (*d).bond_pairs.end(); ++bp) {	
+		cout << distance(domains.begin(), d) << " (" << (*d).source << "," << (*d).target << ")\t" << (*d).length;
+		cout << "\tcross_pairs:\t";
+		for (vector<int>::iterator bp = (*d).cross_pairs.begin(); bp != (*d).cross_pairs.end(); ++bp) {	
 			cout << (*bp) << " (" << domains[*bp].source << "," << domains[*bp].target << ")\t";
 		}
 		cout << "\tstack_pairs:\t";
@@ -157,7 +160,7 @@ void Tile::print_domains () {
 Tile::Tile () {
 	n_vertices = 166;
 	n_domains = n_vertices;
-	fill_domains(domains, n_domains);
+	fill_domains(domains, n_vertices);
 	fill_crossovers(crossovers, domains);
 }
 
