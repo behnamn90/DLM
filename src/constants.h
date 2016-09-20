@@ -1,67 +1,236 @@
-const double k_plus = pow(10,6); // /M /s
+class Constants{
+	public:
+		Constants();
+		Constants(double y_, double n_, double conc_);
+				
+		double scale;
 
-const double l_ds = 0.34; // nm / bp
-const double l_ss = 0.6; // nm / nt
-const double lambda_ss = 1.8; // nm
+		void use_nanometer();
+		void use_micrometer();
+		void use_millimeter();
+		void use_centimeter();
+		void use_decimeter();
+		void use_meter();
 
-const int default_domain_size = 3; //should be 16
-const int default_crossover_size = 1; //should be 0
-const double default_temperature = 360.; // K
+		void change_gamma(double gamma_);
+		void change_n(double n_);
 
-//const double gamma_parameter = 1.5;
-//const double C_parameter = 6.7 * pow(10,-19) * pow(10,18); //m^2 ---> nm^2
-const double gamma_parameter = 2.5;
-const double C_parameter = 2.8 * pow(10,-18) * pow(10,18); //m^2 ---> nm^2
-//const double gamma_parameter = 3.5;
-//const double C_parameter = 5.2 * pow(10,-18) * pow(10,18); //m^2 ---> nm^2
+		double k_plus;
 
-const double n_parameter = 2.0;
+		double l_ds; // nm / bp
+		double l_ss; // nm / nt
+		double lambda_ss; // nm
 
-const double conc_Mg = 12.5 * 0.001; // mM ---> M
-const double conc_Tris = 40. * 0.001; // mM ---> M
-const double conc_staple = 20. * pow(10,-9); // nM ---> M
+		//int default_domain_size; 
+		int default_crossover_size; 
 
-const double gas_constant = 0.00198720358509; // kcal / mol
+		double gamma_parameter; 
+		double C_parameter; 
 
-const double T_max = 100. + 273.15; // K
-const double T_min = 40. + 273.15; // K
-const double cool_rate = 60.; // seconds/K   ***should be 60.
-const double t_max = (T_max-T_min) * cool_rate; // seconds
+		double n_parameter; 
 
-//SantaLucia
-const double dH_AA = -7.6;	// kcal / mol
-const double dH_AT = -7.2;
-const double dH_TA = -7.2;
-const double dH_CA = -8.5;
-const double dH_GT = -8.4;
-const double dH_CT = -7.8;
-const double dH_GA = -8.2;
-const double dH_CG = -10.6; 
-const double dH_GC = -9.8;
-const double dH_GG = -8.0;
+		double conc_Mg; 
+		double conc_Tris; 
+		double conc_staple; 
 
-const double dS_AA = -21.3 * 0.001; // (cal/K) / mol  ---> (kcal/K) / mol
-const double dS_AT = -20.4 * 0.001;
-const double dS_TA = -21.3 * 0.001;
-const double dS_CA = -22.7 * 0.001;
-const double dS_GT = -22.4 * 0.001;
-const double dS_CT = -21.0 * 0.001;
-const double dS_GA = -22.2 * 0.001;
-const double dS_CG = -27.2 * 0.001;
-const double dS_GC = -24.2 * 0.001;
-const double dS_GG = -19.9 * 0.001;
+		double gas_constant; 
 
-const double dH_average = ( 2.*(dH_AA + dH_CA + dH_GT + dH_CT + dH_GA + dH_GG) + (dH_AT + dH_TA + dH_CG + dH_GC) ) / 16.;
-const double dS_average = ( 2.*(dS_AA + dS_CA + dS_GT + dS_CT + dS_GA + dS_GG) + (dS_AT + dS_TA + dS_CG + dS_GC) ) / 16.;
+		//SantaLucia
+		double dH_AA; 
+		double dH_AT; 
+		double dH_TA; 
+		double dH_CA; 
+		double dH_GT; 
+		double dH_CT; 
+		double dH_GA; 
+		double dH_CG; 
+		double dH_GC; 
+		double dH_GG; 
 
-const double dH_termAT = 2.2;
-const double dS_termAT = 6.9 * 0.001;
-const double dH_termCG = 0.0;
-const double dS_termCG = 0.0;
+		double dS_AA; 
+		double dS_AT; 
+		double dS_TA; 
+		double dS_CA; 
+		double dS_GT; 
+		double dS_CT; 
+		double dS_GA; 
+		double dS_CG; 
+		double dS_GC; 
+		double dS_GG; 
 
-const double dH_init = 0.2;
-const double dS_init = -5.7 * 0.001;
+		double dH_average; 
+		double dS_average; 
 
+		double dH_termAT; 
+		double dS_termAT; 
+		double dH_termCG; 
+		double dS_termCG; 
+
+		double dH_init; 
+		double dS_init; 
+};
+
+void Constants::use_nanometer(){
+	scale = 1000000000.;
+}
+void Constants::use_micrometer(){
+	scale = 1000000.;
+}
+void Constants::use_millimeter(){
+	scale = 1000.;
+}
+void Constants::use_centimeter(){
+	scale = 100.;
+}
+void Constants::use_decimeter(){
+	scale = 10.;
+}
+void Constants::use_meter(){
+	scale = 1.;
+}
+
+void Constants::change_gamma(double gamma_){
+	if (abs(gamma_-1.5) < 0.00000000000000000000000001){
+		gamma_parameter = 1.5;
+		C_parameter = 6.7 * pow(10,-19) * scale*scale;
+	}
+	else if (abs(gamma_-2.5) < 0.00000000000000000000000001){
+		gamma_parameter = 2.5;
+		C_parameter = 2.8 * pow(10,-18) * scale*scale;
+	}
+	else if (abs(gamma_-3.5) < 0.00000000000000000000000001){
+		gamma_parameter = 3.5;
+		C_parameter = 5.2 * pow(10,-18) * scale*scale;
+	}
+	else {printf ("Error! Value of gamma not supported.\n"); exit (EXIT_FAILURE);}
+}
+void Constants::change_n(double n_){
+	n_parameter = n_;
+}
+
+Constants::Constants () {
+	use_decimeter();
+	//meter
+	//10^6 M-1 s-1 = 10^6 (mol/L)-1 s-1 = 10^6 (mol/0.001m3)-1 s-1 = 10^6 0.001 m3 mol-1 s-1
+	//10^6 M-1 s-1 = 10^6 (1000 mM)-1 s-1 = 10^6 0.001 mM-1 s-1
+	k_plus = pow(10,3) * scale*scale*scale; // mol-1  m3  s-1
+
+	// 0.34nm , 0.6nm, 1.8nm
+	l_ds = 0.34 * pow(10,-9) * scale; // m  bp-1
+	l_ss = 0.6 * pow(10,-9) * scale; // m  nt-1
+	lambda_ss = 1.8 * pow(10,-9) * scale; //  m
+
+	gamma_parameter = 1.5;
+	C_parameter = 6.7 * pow(10,-19) * scale*scale;
+
+	//12.5 mM = 12.5 (10-3) mol L-1 = 12.5 (10-3) mol (0.001m3)-1 = 12.5 mol m-3
+	conc_Mg = 12.5 * (1./(scale*scale*scale)); // mol  m-3
+	//40 mM = 40 mol m-3
+	conc_Tris = 40. * (1./(scale*scale*scale)); // mol  m-3
+	//20 nM = 20 * 10^6 mM = 20 * 10^6 mol m-3
+	conc_staple = 20. * pow(10,-9) * pow(10,3) * (1./(scale*scale*scale)); // mol m-3
+	
+	n_parameter = 2.0;
+
+	gas_constant = 0.00198720358509; // kcal / mol
+	default_crossover_size = 1; //should be 0
+
+	//SantaLucia
+	dH_AA = -7.6;	// kcal / mol
+	dH_AT = -7.2;
+	dH_TA = -7.2;
+	dH_CA = -8.5;
+	dH_GT = -8.4;
+	dH_CT = -7.8;
+	dH_GA = -8.2;
+	dH_CG = -10.6; 
+	dH_GC = -9.8;
+	dH_GG = -8.0;
+
+	dS_AA = -21.3 * 0.001; // (cal/K) / mol  ---> (kcal/K) / mol
+	dS_AT = -20.4 * 0.001;
+	dS_TA = -21.3 * 0.001;
+	dS_CA = -22.7 * 0.001;
+	dS_GT = -22.4 * 0.001;
+	dS_CT = -21.0 * 0.001;
+	dS_GA = -22.2 * 0.001;
+	dS_CG = -27.2 * 0.001;
+	dS_GC = -24.2 * 0.001;
+	dS_GG = -19.9 * 0.001;
+
+	dH_average = ( 2.*(dH_AA + dH_CA + dH_GT + dH_CT + dH_GA + dH_GG) + (dH_AT + dH_TA + dH_CG + dH_GC) ) / 16.;
+	dS_average = ( 2.*(dS_AA + dS_CA + dS_GT + dS_CT + dS_GA + dS_GG) + (dS_AT + dS_TA + dS_CG + dS_GC) ) / 16.;
+
+	dH_termAT = 2.2;
+	dS_termAT = 6.9 * 0.001;
+	dH_termCG = 0.0;
+	dS_termCG = 0.0 * 0.001;
+
+	dH_init = 0.2;
+	dS_init = -5.7 * 0.001;
+}
+
+Constants::Constants (double y_, double n_, double conc_) { //conc_ in nM
+	use_decimeter();
+	//meter
+	//10^6 M-1 s-1 = 10^6 (mol/L)-1 s-1 = 10^6 (mol/0.001m3)-1 s-1 = 10^6 0.001 m3 mol-1 s-1
+	//10^6 M-1 s-1 = 10^6 (1000 mM)-1 s-1 = 10^6 0.001 mM-1 s-1
+	k_plus = pow(10,3) * scale*scale*scale; // mol-1  m3  s-1
+
+	// 0.34nm , 0.6nm, 1.8nm
+	l_ds = 0.34 * pow(10,-9) * scale; // m  bp-1
+	l_ss = 0.6 * pow(10,-9) * scale; // m  nt-1
+	lambda_ss = 1.8 * pow(10,-9) * scale; //  m
+
+	gamma_parameter = y_;
+	C_parameter = 6.7 * pow(10,-19) * scale*scale;
+
+	//12.5 mM = 12.5 (10-3) mol L-1 = 12.5 (10-3) mol (0.001m3)-1 = 12.5 mol m-3
+	conc_Mg = 12.5 * (1./(scale*scale*scale)); // mol  m-3
+	//40 mM = 40 mol m-3
+	conc_Tris = 40. * (1./(scale*scale*scale)); // mol  m-3
+	//20 nM = 20 * 10^6 mM = 20 * 10^6 mol m-3
+	conc_staple = conc_ * pow(10,-9) * pow(10,3) * (1./(scale*scale*scale)); // mol m-3
+	
+	n_parameter = n_;
+
+	gas_constant = 0.00198720358509; // kcal / mol
+	default_crossover_size = 1; //should be 0
+
+	//SantaLucia
+	dH_AA = -7.6;	// kcal / mol
+	dH_AT = -7.2;
+	dH_TA = -7.2;
+	dH_CA = -8.5;
+	dH_GT = -8.4;
+	dH_CT = -7.8;
+	dH_GA = -8.2;
+	dH_CG = -10.6; 
+	dH_GC = -9.8;
+	dH_GG = -8.0;
+
+	dS_AA = -21.3 * 0.001; // (cal/K) / mol  ---> (kcal/K) / mol
+	dS_AT = -20.4 * 0.001;
+	dS_TA = -21.3 * 0.001;
+	dS_CA = -22.7 * 0.001;
+	dS_GT = -22.4 * 0.001;
+	dS_CT = -21.0 * 0.001;
+	dS_GA = -22.2 * 0.001;
+	dS_CG = -27.2 * 0.001;
+	dS_GC = -24.2 * 0.001;
+	dS_GG = -19.9 * 0.001;
+
+	dH_average = ( 2.*(dH_AA + dH_CA + dH_GT + dH_CT + dH_GA + dH_GG) + (dH_AT + dH_TA + dH_CG + dH_GC) ) / 16.;
+	dS_average = ( 2.*(dS_AA + dS_CA + dS_GT + dS_CT + dS_GA + dS_GG) + (dS_AT + dS_TA + dS_CG + dS_GC) ) / 16.;
+
+	dH_termAT = 2.2;
+	dS_termAT = 6.9 * 0.001;
+	dH_termCG = 0.0;
+	dS_termCG = 0.0 * 0.001;
+
+	dH_init = 0.2;
+	dS_init = -5.7 * 0.001;
+}
 
 // **** constants in dectameters
 //const double l_ds = 0.34 * pow(10,-8); // nm / bp ---> dm / bp

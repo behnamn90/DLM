@@ -68,6 +68,11 @@ template <class Graph, class edge_matrix> void planar_embedding(Graph& g, edge_m
 		cout << "input graph is not planar." << endl;
 }
 
+template <class T> void print_vec(vector<T> &vec){
+	for (int i=0; i<vec.size(); i++){
+			cout << i << "\t" << vec[i] << "\n";
+	}
+}
 void print_matrix(vector< vector<double> >& matrix){
 	for (int i=0; i<matrix.size(); i++){
 		for (int j=0; j<matrix[0].size(); j++){
@@ -100,14 +105,14 @@ double sum_elements(vector<double>& v) {
 	return sum_of_elems;
 }
 
-double Kelvin(double C) {
+double kelvin(double C) {
 	return C + 273.15;
 }
-double Centigrade(double K) {
+double centigrade(double K) {
 	return K - 273.15;
 }
 
-double Seconds(double minutes) {
+double seconds(double minutes) {
 	return minutes * 60.;
 }
 double minutes(double seconds) {
