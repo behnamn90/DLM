@@ -1,6 +1,6 @@
 #!/bin/sh
 
-g++ ${1}.cpp -I ~/CODE/Libraries/Boost/boost_1_58_0/ -o ../bin/${1}
+g++ ${1}.cpp -std=c++11 -I ~/CODE/Libraries/Boost/boost_1_58_0/ -o ../bin/${1}
 ../bin/${1}
 cd ../Output
 for i in *.gv; do
