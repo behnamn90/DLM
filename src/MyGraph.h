@@ -190,11 +190,12 @@ class MyGraph{
 			}
 			return distanceMap[b];
 		}
-		void make_transition(int e) {
+		void make_transition(int e, bool add) {
+			if (add == false) {cout << "got one type 12." << endl;}
 			Domain domain = design.domains[e];
 			vector<int> possible_crossovers = domain.crossover_ids;
-			Edge_desc edge = id_to_edge(e);
-			int e2;
+			Edge_desc myedge = id_to_edge(e);
+			int e2, v1, v2;
 			Edge_desc cross_edge;
 			Crossover c;
 			for (vector<int>::iterator it = possible_crossovers.begin(); it != possible_crossovers.end(); ++it) {
@@ -202,20 +203,24 @@ class MyGraph{
 				if ( c.d_a == e ) { e2 = c.d_b; } else { e2 = c.d_a; } 
 				cross_edge = id_to_edge(e2);
 				if (g[cross_edge].type == 'd') {
-					if (g[edge].type == 'd') {
-						remove_crossover(*it);
+					if (g[myedge].type == 'd') {
+						if (edge(c.v_a, c.v_b, g).second == true || edge(c.v_b, c.v_a, g).second == true){
+							remove_crossover(*it);
+						}
 					}
-					else if (g[edge].type == 's') {
-						add_crossover(*it);
+					else if (g[myedge].type == 's') {
+						if (add == true){ 
+							add_crossover(*it);
+						}
 					}
 					else {printf ("Error!\n"); exit (EXIT_FAILURE);}
 				}
 			}
-			if (g[edge].type == 'd') {
-				g[edge].type = 's';
+			if (g[myedge].type == 'd') {
+				g[myedge].type = 's';
 			}
-			else if (g[edge].type == 's') {
-				g[edge].type = 'd';
+			else if (g[myedge].type == 's') {
+				g[myedge].type = 'd';
 			}
 			else {printf ("Error!\n"); exit (EXIT_FAILURE);}
 			set_edge_weights();
@@ -247,6 +252,40 @@ class MyGraph{
 				if(g[*ei].type == 'd'){result++;}
 			}
 			return result;
+		}
+		void test_transition(int e, bool add) {
+			Domain domain = design.domains[e];
+			vector<int> possible_crossovers = domain.crossover_ids;
+			Edge_desc myedge = id_to_edge(e);
+			int e2, v1, v2;
+			Edge_desc cross_edge;
+			Crossover c;
+			for (vector<int>::iterator it = possible_crossovers.begin(); it != possible_crossovers.end(); ++it) {
+				c = design.crossovers[*it];
+				if ( c.d_a == e ) { e2 = c.d_b; } else { e2 = c.d_a; } 
+				cross_edge = id_to_edge(e2);
+				if (g[cross_edge].type == 'd') {
+					if (g[myedge].type == 'd') {
+						if (edge(c.v_a, c.v_b, g).second == true || edge(c.v_b, c.v_a, g).second == true){
+							//remove_crossover(*it);
+						}
+					}
+					else if (g[myedge].type == 's') {
+						if (add == true){ 
+							//add_crossover(*it);
+						}
+					}
+					else {printf ("Error!\n"); exit (EXIT_FAILURE);}
+				}
+			}
+			if (g[myedge].type == 'd') {
+				g[myedge].type = 's';
+			}
+			else if (g[myedge].type == 's') {
+				g[myedge].type = 'd';
+			}
+			else {printf ("Error!\n"); exit (EXIT_FAILURE);}
+			set_edge_weights();
 		}
 };
 

@@ -9,10 +9,12 @@ Temp = []
 Prob = []
 i=0
 with open(myfile1,'r') as myfile:
+	params = myfile.readline()
+with open(myfile1,'r') as myfile:
 	for line in myfile:
-		#if i!=0:
-		Temp.append(int(line.split()[1]))
-		Prob.append(float(line.split()[3])/165.)
+		if i!=0:
+			Temp.append(int(line.split()[1]))
+			Prob.append(float(line.split()[3])/166.)
 		i+=1
 
 T = []
@@ -66,4 +68,4 @@ for i in range(0,len(T)):
 		T80 = T_final[i]
 		break
 	
-print("T_"+sys.argv[2]+" = "+str(T50) + "\t" + "delta_T = "+str(abs(T80-T20)) )
+print("T_"+sys.argv[2]+" = "+str(T50) + "\t" + "dT = "+str(abs(T80-T20))+ "\n" + params)

@@ -75,7 +75,7 @@ template <class T> void print_vec(vector<T> &vec){
 }
 void print_matrix(vector< vector<double> >& matrix){
 	for (int i=0; i<matrix.size(); i++){
-		for (int j=0; j<matrix[0].size(); j++){
+		for (int j=0; j<matrix[i].size(); j++){
 			cout << matrix[i][j] << "\t";
 		}
 		cout << "\n";

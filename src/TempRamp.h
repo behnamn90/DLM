@@ -46,11 +46,13 @@ void TempRamp::_fill_melt(){
 }
 void TempRamp::set_time(double current_t_){
 	current_t = current_t_;
-	_current_t = current_t;
 	if (current_t < t_max){ 
 		_current_t = current_t;
 		current_T = _ramp[_current_t];
 	}
+	else {
+		cout << "Simulation time exceeded so cannot update the temperature in TempRamp.\n";
+	} 
 }
 void TempRamp::move_time(double delta_t){
 	current_t = current_t + delta_t;
@@ -126,7 +128,7 @@ Anneal::Anneal(double T_start_, double T_end_, double cool_rate_, int n_cycles_=
 	if (T_start < T_end) {anneal_first = false; T_high = T_end; T_low = T_start;}
 	else {anneal_first = true; T_high = T_start; T_low = T_end;}
 	t_max_in_each = abs(T_start-T_end) * cool_rate;
-	t_max = 2. * n_cycles * t_max_in_each;
+	t_max = n_cycles * t_max_in_each;
 	_fill_ramp();
 	current_T = _ramp[_current_t];
 }
@@ -156,7 +158,7 @@ Melt::Melt(double T_start_, double T_end_, double cool_rate_, int n_cycles_=1){
 	if (T_start < T_end) {anneal_first = false; T_high = T_end; T_low = T_start;}
 	else {anneal_first = true; T_high = T_start; T_low = T_end;}
 	t_max_in_each = abs(T_start-T_end) * cool_rate;
-	t_max = 2. * n_cycles * t_max_in_each;
+	t_max = n_cycles * t_max_in_each;
 	_fill_ramp();
 	current_T = _ramp[_current_t];
 }
