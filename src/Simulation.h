@@ -153,7 +153,7 @@ void Local::run(string filename_, int seed) {
 	string filename = "../Output/"+filename_+".txt";
 	change_file.open(filename);
 	constants->write_params(change_file);
-	typedef minstd_rand base_generator_type;
+	typedef boost::minstd_rand base_generator_type;
 	base_generator_type generator(seed);
 	uniform_real<> uni_dist(0,1);
 	variate_generator<base_generator_type&, uniform_real<> > uni(generator, uni_dist);
@@ -197,7 +197,7 @@ void Local::run(string filename_, int seed) {
 	change_file.close();
 }
 void Local::test(int seed, double T) {
-	typedef minstd_rand base_generator_type;
+	typedef boost::minstd_rand base_generator_type;
 	base_generator_type generator(seed);
 	uniform_real<> uni_dist(0,1);
 	variate_generator<base_generator_type&, uniform_real<> > uni(generator, uni_dist);
