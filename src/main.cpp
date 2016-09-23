@@ -27,8 +27,14 @@ int main(int argc, const char * argv[]) {
 	
 	Local local_a = Local(constants, G, anneal);
 	Local local_mb = Local(constants, G_full, melt);
-	local_a.run("Anneal", seed);
-	local_mb.run("Melt", seed);
+	//string file_params = "_"+to_string(arguments[1])+"_"+to_string(arguments[2])+"_"+to_string(arguments[3])+"_"+to_string(arguments[4])+"_"+to_string(seed);
+	string file_params;
+	for (int i=1; i<argc; i++){
+		file_params.append("_");
+		file_params.append(argv[i]);
+	}
+	local_a.run("Anneal"+file_params, seed);
+	local_mb.run("Melt"+file_params, seed);
 	delete constants;
 	delete G;
 	delete anneal;
