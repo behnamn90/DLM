@@ -22,8 +22,8 @@ int main(int argc, const char * argv[]) {
 	MyGraph *G_full = new MyGraph(Frits(), constants);
 	for (int i=0; i<166; i++){G_full->make_transition(i,true);}
 	
-	Melt *melt = new Melt(40.,100.,arguments[4]);
-	Anneal *anneal = new Anneal(100.,40.,arguments[4]);
+	Melt *melt = new Melt(40.,100.,Cpm2spC(arguments[4]));
+	Anneal *anneal = new Anneal(100.,40.,Cpm2spC(arguments[4]));
 	
 	Local local_a = Local(constants, G, anneal);
 	Local local_mb = Local(constants, G_full, melt);

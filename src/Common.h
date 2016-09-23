@@ -118,3 +118,6 @@ double seconds(double minutes) {
 double minutes(double seconds) {
 	return seconds / 60.;
 }
+double Cpm2spC (double Cpm){
+	return 1. / (Cpm / 60.);
+}

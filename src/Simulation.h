@@ -153,6 +153,7 @@ void Local::run(string filename_, int seed) {
 	string filename = "../Output/"+filename_+".txt";
 	change_file.open(filename);
 	change_file << "seed= " << seed << endl;
+	change_file << "cool_rate[s/K]= " << ramp->cool_rate << endl;
 	constants->write_params(change_file);
 	typedef boost::minstd_rand base_generator_type;
 	base_generator_type generator(seed);

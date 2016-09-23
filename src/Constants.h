@@ -132,7 +132,8 @@ Constants::Constants () {
 	gamma_parameter = 1.5;
 	C_parameter = 6.7 * pow(10,-19) * scale*scale;
 
-	salt_per_phosphate = -0.944;
+	//salt_per_phosphate = -0.944;
+	salt_per_phosphate = 0.;
 	//12.5 mM = 12.5 (10-3) mol L-1 = 12.5 (10-3) mol (0.001m3)-1 = 12.5 mol m-3
 	conc_Mg = 12.5 * (1./(scale*scale*scale)); // mol  m-3
 	//40 mM = 40 mol m-3
@@ -194,7 +195,8 @@ Constants::Constants (double y_, double n_, double conc_) { //conc_ in nM
 
 	change_gamma(y_);
 
-	salt_per_phosphate = -0.944;
+	//salt_per_phosphate = -0.944;
+	salt_per_phosphate = 0.;
 	//12.5 mM = 12.5 (10-3) mol L-1 = 12.5 (10-3) mol (0.001m3)-1 = 12.5 mol m-3
 	conc_Mg = 12.5 * (1./(scale*scale*scale)); // mol  m-3
 	//40 mM = 40 mol m-3
