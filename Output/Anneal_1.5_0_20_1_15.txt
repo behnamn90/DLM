@@ -1,0 +1,7 @@
+seed= 15
+cool_rate[s/K]= 60
+y= 1.5
+n= 0
+scale= 1e+09
+conc= 2e-32
+salt= 0
