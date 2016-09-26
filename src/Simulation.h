@@ -10,11 +10,45 @@ class Simulation{
 		vector< vector<double> > rates;
 
 		double dG_duplex(Domain &domain);
+		double dG_duplex_average(Domain &domain);
 		double dG_stack();
 		void print_rates();
 		double calc_tot_rate();
 };
 double Simulation::dG_duplex(Domain &domain) {
+	double result;
+	double dH = 0.;
+	double dS = 0.;
+	double terminal = 0;
+	double T = ramp->get_T();
+	string sequence = domain.seq;
+
+	if (sequence[0] == 'A' || sequence[0] == 'T'){terminal += constants->dH_termAT - T*constants->dS_termAT;}
+	if (sequence[sequence.size()-1] == 'A' || sequence[sequence.size()-1] == 'T'){terminal += constants->dH_termAT - T*constants->dS_termAT;}
+
+	string sub;
+	for (int i=0; i<sequence.size()-1; i++){
+		sub.clear();
+		sub += sequence[i];
+		sub += sequence[i+1];
+		if (sub == "AA" || sub == "TT") { dH+=constants->dH_AA; dS+=constants->dS_AA; }
+		else if (sub == "CA" || sub == "TG") { dH+=constants->dH_CA; dS+=constants->dS_CA; }
+		else if (sub == "GT" || sub == "AC") { dH+=constants->dH_GT; dS+=constants->dS_GT; }
+		else if (sub == "CT" || sub == "AG") { dH+=constants->dH_CT; dS+=constants->dS_CT; }
+		else if (sub == "GA" || sub == "TC") { dH+=constants->dH_GA; dS+=constants->dS_GA; }
+		else if (sub == "GG" || sub == "CC") { dH+=constants->dH_GG; dS+=constants->dS_GG; }
+		else if (sub == "AT") { dH+=constants->dH_AT; dS+=constants->dS_AT; }
+		else if (sub == "TA") { dH+=constants->dH_TA; dS+=constants->dS_TA; }
+		else if (sub == "CG") { dH+=constants->dH_CG; dS+=constants->dS_CG; }
+		else if (sub == "GC") { dH+=constants->dH_GC; dS+=constants->dS_GC; }
+		else {printf ("Error! sequence not in nn database. \n"); exit (EXIT_FAILURE);}
+	}
+	
+	double dS_salt = (domain.length - 1) * 0.368 * constants->salt_per_phosphate; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
+	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - dS_salt;
+	return result;
+}
+double Simulation::dG_duplex_average(Domain &domain) {
 	double result;
 	double T = ramp->get_T();
 	double terminal = ( ( constants->dH_termAT - T*constants->dS_termAT ) + ( constants->dH_termCG - T*constants->dS_termCG ) ); // 2 * 1/2
@@ -145,6 +179,7 @@ void Local::fill_rates() {
 	//}
 	for (int d=0; d<rates.size(); d++){
 		//cout << calc_rate(d).size() << endl;
+		//cout << d << endl;
 		rates[d] = calc_rate(d);
 	}
 }

@@ -40,6 +40,22 @@ int main(int argc, const char * argv[]) {
 	delete anneal;
 	delete melt;
 
+
+	
+	//Design test = Frits();
+	//test.print_domains();
+	/*
+	for (unsigned i = test.domains.size(); i-- > 0; ) {
+		cout << i << "\t" << test.domains[i].seq << endl;
+	}
+	int scaff_size = test.scaffold_sequence.size();
+	int staple_size = 0; 
+	for (int i = 0; i < test.domains.size(); i++){
+		staple_size += test.domains[i].seq.size();
+	}
+	cout << scaff_size << "\t" << staple_size << endl;
+	*/
+
 	return 0;
 }
 
