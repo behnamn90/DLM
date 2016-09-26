@@ -12,17 +12,17 @@ with open(myfile1,'r') as myfile:
 	params = myfile.readline()
 with open(myfile1,'r') as myfile:
 	for line in myfile:
-		if i!=0:
+		if i>7:
 			Temp.append(int(line.split()[1]))
 			Prob.append(float(line.split()[3])/166.)
 		i+=1
 
 T = []
 
-if sys.argv[2] == "a":
+if sys.argv[1][0] == "A":
 	T_low = Temp[len(Temp)-1]
 	T_high = Temp[0]
-if sys.argv[2] == "m":
+if sys.argv[1][0] == "M":
 	T_low = Temp[0]
 	T_high = Temp[len(Temp)-1]
 
@@ -49,6 +49,7 @@ for i in range(0,len(T)):
 	P_final.append(np.mean(P[i]))
 	P_var.append(np.var(P[i]))
 
+
 for i in range(0,len(T)):
 	print(str(T_final[i]) +"\t"+ str(P_final[i]) +"\t"+ str(P_var[i]) )
 
@@ -68,4 +69,6 @@ for i in range(0,len(T)):
 		T80 = T_final[i]
 		break
 	
-print("T_"+sys.argv[2]+" = "+str(T50) + "\t" + "dT = "+str(abs(T80-T20))+ "\n" + params)
+#print(sys.argv[1] + "\t" + "T_"+sys.argv[1][0]+" = "+str(T50) + "\t" + "dT = "+str(abs(T80-T20))+ "\t" + params)
+print(sys.argv[1] + "\t" + "T_"+sys.argv[1][0]+" = "+str(T50) + "\t" + "dT = "+str(abs(T80-T20)))
+
