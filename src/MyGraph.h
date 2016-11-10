@@ -15,6 +15,7 @@ typedef graph_traits<Graph>::vertex_iterator Vertex_iter;
 typedef graph_traits<Graph>::edge_iterator Edge_iter;
 typedef graph_traits<Graph>::vertex_descriptor Vertex_desc;
 typedef graph_traits<Graph>::edge_descriptor Edge_desc;
+typedef vector<Edge_desc> Path;
 
 class MyGraph{
 	public:
@@ -180,7 +181,7 @@ class MyGraph{
 			PredecessorMap predecessorMap(&predecessors[0], indexMap);
 			DistanceMap distanceMap(&distances[0], indexMap);
 			dijkstra_shortest_paths(g, a, weight_map(get(&EdgeProperty::weight, g)).distance_map(distanceMap).predecessor_map(predecessorMap));
-			typedef vector<Edge_desc> Path;
+			//typedef vector<Edge_desc> Path;
 			Path path;
 			Vertex_desc v=b; // We want to start at the destination and work our way back to the source
 			for(Vertex_desc u=predecessorMap[v]; u!=v; v=u, u=predecessorMap[v]) {
@@ -213,7 +214,7 @@ class MyGraph{
 							add_crossover(*it);
 						}
 					}
-					else {printf ("Error!\n"); exit (EXIT_FAILURE);}
+					else {printf ("Error! MyGraph::make_tansition: domain is neither s nor d. \n"); exit (EXIT_FAILURE);}
 				}
 			}
 			if (g[myedge].type == 'd') {
@@ -222,7 +223,7 @@ class MyGraph{
 			else if (g[myedge].type == 's') {
 				g[myedge].type = 'd';
 			}
-			else {printf ("Error!\n"); exit (EXIT_FAILURE);}
+			else {printf ("Error! MyGraph::make_tansition: domain is neither s nor d. \n"); exit (EXIT_FAILURE);}
 			set_edge_weights();
 		}
 		void update_embedding() {

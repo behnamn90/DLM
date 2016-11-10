@@ -9,13 +9,13 @@ class Simulation{
 		TempRamp *ramp;
 		vector< vector<double> > rates;
 
+		double dG_duplex_2(Domain &domain);
 		double dG_duplex(Domain &domain);
-		double dG_duplex_average(Domain &domain);
 		double dG_stack();
 		void print_rates();
 		double calc_tot_rate();
 };
-double Simulation::dG_duplex(Domain &domain) {
+double Simulation::dG_duplex_2(Domain &domain) {
 	double result;
 	double dH = 0.;
 	double dS = 0.;
@@ -44,11 +44,11 @@ double Simulation::dG_duplex(Domain &domain) {
 		else {printf ("Error! sequence not in nn database. \n"); exit (EXIT_FAILURE);}
 	}
 	
-	double dS_salt = (domain.length - 1) * 0.368 * constants->salt_per_phosphate; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
-	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - dS_salt;
+	double dS_salt = ((domain.length - 1) * 0.368 * constants->salt_per_phosphate) / 1000.; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
+	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - T * dS_salt;
 	return result;
 }
-double Simulation::dG_duplex_average(Domain &domain) {
+double Simulation::dG_duplex(Domain &domain) {
 	double result;
 	double T = ramp->get_T();
 	double terminal = ( ( constants->dH_termAT - T*constants->dS_termAT ) + ( constants->dH_termCG - T*constants->dS_termCG ) ); // 2 * 1/2
@@ -57,9 +57,9 @@ double Simulation::dG_duplex_average(Domain &domain) {
 	//double dS_salt = (domain.length-1) * 0.368 * log( 0.5*constants->conc_Tris + 3.3*sqrt(constants->conc_Mg) );
 	//double dS_salt = (domain.length-1) * 0.368 * 3.45528339927;  //using 12.5 and 40.
 	//double dS_salt = (domain.length - 1) * 0.368 * -0.944; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
-	double dS_salt = (domain.length - 1) * 0.368 * constants->salt_per_phosphate; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
+	double dS_salt = ((domain.length - 1) * 0.368 * constants->salt_per_phosphate) / 1000.; // using 0.001 * 12.5 and 0.001 * 40.  (Frits)
 	//double dS_salt = 0.;
-	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - dS_salt;
+	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - T * dS_salt;
 	return result;
 }
 double Simulation::dG_stack() {
@@ -197,7 +197,9 @@ void Local::run(string filename_, int seed) {
     double r1, r2, tau, min, max, total_rate;
 	int next_edge, k, reaction_index, reaction_type;
 	ramp->set_time(0.);
+	//vector<int> affected;
 	while (ramp->current_t < ramp->t_max){
+		//affected.clear();
 		bool add = true;
 		fill_rates();
 		r1 = uni(); r2 = uni();
@@ -223,9 +225,9 @@ void Local::run(string filename_, int seed) {
 			}
 			k++;
 		}
-		if (reaction_type == 1) {add = false;}	
+		if (reaction_type == 1) {add = false;}
 		//G->set_edge_weights(); 
-		tau = (1./total_rate)*log(1./r1); //Total rate is very small when mostly bound at low T (upto 60C)! This is causing problems by giving large tau.
+		tau = (1./total_rate)*log(1./r1); //Total rate is very small when mostly bound at low T (upto 60C)! This is causing problems by giving large tau.		
 		if (tau > ramp->cool_rate){continue;}
 		change_file << ramp->current_t << "\t" << centigrade(ramp->get_T()) << "\t" << next_edge << "\t" << G->get_bound_count() << "\n";
 		G->make_transition(next_edge,add);
@@ -420,3 +422,6 @@ void Local::test(int seed, double T, int d) {
 	}
 	cout << "\n";
 }
+
+
+
