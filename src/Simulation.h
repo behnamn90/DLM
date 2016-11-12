@@ -9,13 +9,13 @@ class Simulation{
 		TempRamp *ramp;
 		vector< vector<double> > rates;
 
-		double dG_duplex_2(Domain &domain);
 		double dG_duplex(Domain &domain);
+		double dG_duplex_average(Domain &domain);
 		double dG_stack();
 		void print_rates();
 		double calc_tot_rate();
 };
-double Simulation::dG_duplex_2(Domain &domain) {
+double Simulation::dG_duplex(Domain &domain) {
 	double result;
 	double dH = 0.;
 	double dS = 0.;
@@ -48,7 +48,7 @@ double Simulation::dG_duplex_2(Domain &domain) {
 	result = constants->dH_init - T*constants->dS_init + dH - T*dS + terminal - T * dS_salt;
 	return result;
 }
-double Simulation::dG_duplex(Domain &domain) {
+double Simulation::dG_duplex_average(Domain &domain) {
 	double result;
 	double T = ramp->get_T();
 	double terminal = ( ( constants->dH_termAT - T*constants->dS_termAT ) + ( constants->dH_termCG - T*constants->dS_termCG ) ); // 2 * 1/2
