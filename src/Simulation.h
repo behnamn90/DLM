@@ -82,7 +82,6 @@ double Simulation::calc_tot_rate(){
 	return result;
 }
 
-
 class Local: public Simulation{
 	public:
 		Local(Constants *constants_, MyGraph *G_, TempRamp *ramp_);
@@ -90,16 +89,21 @@ class Local: public Simulation{
 
 		double dG_shape(Crossover &crossover);
 		vector<double> calc_rate(int d);
+		vector<int> affected;
 		void fill_rates();
 		void run(string filename_, int seed);
-		void test(int seed, double T);
-		void test(int seed, double T, int d);
+		//void test(int seed, double T);
+		//void test(int seed, double T, int d);
 };
 Local::Local(Constants *constants_, MyGraph *G_, TempRamp *ramp_){
 	ramp = ramp_;
 	constants = constants_;
 	G = G_;
 	rates.resize(G->design.domains.size());
+	affected.resize(rates.size());
+	for (int i = 0; i < rates.size(); i++){
+		affected[i] = i;
+	}
 }
 double Local::dG_shape(Crossover &crossover) {
 	double result;
@@ -177,9 +181,16 @@ void Local::fill_rates() {
 		//cout << calc_rate(d).size() << endl;
 	//	rates.push_back(calc_rate(d));
 	//}
-	for (int d=0; d<rates.size(); d++){
+	//for (int d=0; d<rates.size(); d++){
 		//cout << calc_rate(d).size() << endl;
 		//cout << d << endl;
+	//	rates[d] = calc_rate(d);
+	//}
+	int d;
+	for (int i=0; i<affected.size(); i++){
+		//cout << calc_rate(d).size() << endl;
+		//cout << d << endl;
+		d = affected[i];
 		rates[d] = calc_rate(d);
 	}
 }
@@ -194,47 +205,65 @@ void Local::run(string filename_, int seed) {
 	base_generator_type generator(seed);
 	uniform_real<> uni_dist(0,1);
 	variate_generator<base_generator_type&, uniform_real<> > uni(generator, uni_dist);
-    double r1, r2, tau, min, max, total_rate;
-	int next_edge, k, reaction_index, reaction_type;
+    double r1, r2, tau, min, max, total_rate, T_now, T_past;
+	int next_edge, reaction_type;
 	ramp->set_time(0.);
-	//vector<int> affected;
 	while (ramp->current_t < ramp->t_max){
-		//affected.clear();
+		T_now = ramp->get_T();
 		bool add = true;
+		if ( abs(T_now-T_past) > 0.00000000001){ 
+			affected.clear();
+			affected.resize(rates.size());
+			for (int i = 0; i < rates.size(); i++){
+				affected[i] = i;
+			}
+		}
+		sort( affected.begin(), affected.end() );
+		affected.erase( unique( affected.begin(), affected.end() ), affected.end() );
+		//for (int i=0; i<affected.size(); i++){
+			//cout << affected[i] << " ";
+		//}
+		//cout << "\n\n";
+		//print_rates();
 		fill_rates();
+		affected.clear();
 		r1 = uni(); r2 = uni();
 		total_rate = calc_tot_rate(); 
 		min = 0.; //check whether this can be outside this loop.
 		max = 0.;
-		k=0; //reaction index
 		for (int i=0; i<rates.size(); i++){ 
 			for (int j=0; j<rates[i].size(); j++){ 
 				max = max + rates[i][j]/total_rate; 
 				if (r2 >= min && r2 < max){
 					next_edge = i;
-					reaction_index = k;
 					reaction_type = j;
 					break; //need to break twice
 				}
 				min = max;
-				if (j!=0)
-				   	k++;
 			}
 			if (r2 >= min && r2 < max){
 				break;
 			}
-			k++;
 		}
 		if (reaction_type == 1) {add = false;}
 		//G->set_edge_weights(); 
 		tau = (1./total_rate)*log(1./r1); //Total rate is very small when mostly bound at low T (upto 60C)! This is causing problems by giving large tau.		
 		if (tau > ramp->cool_rate){continue;}
 		change_file << ramp->current_t << "\t" << centigrade(ramp->get_T()) << "\t" << next_edge << "\t" << G->get_bound_count() << "\n";
-		G->make_transition(next_edge,add);
+		G->make_transition(next_edge,add,affected);
 		ramp->move_time(tau); //this causes segmentation fault if the current time after this is longer that total time. But fixes it in the function itself.
+		T_past = T_now;
 	}
 	change_file.close();
 }
+
+
+
+
+
+
+
+/*
 void Local::test(int seed, double T) {
 	typedef boost::minstd_rand base_generator_type;
 	base_generator_type generator(seed);
@@ -244,7 +273,7 @@ void Local::test(int seed, double T) {
 	int next_edge, k, reaction_index, reaction_type;
 	ramp->set_temp(T);
 	bool add = true;
-	fill_rates();
+	//fill_rates();
 	//print_rates();
 	r1 = uni(); r2 = uni();
 	total_rate = calc_tot_rate(); 
@@ -348,7 +377,7 @@ void Local::test(int seed, double T) {
 }
 void Local::test(int seed, double T, int d) {
 	ramp->set_temp(T);
-	fill_rates();
+	//fill_rates();
 	double total_rate = calc_tot_rate(); 
 	cout << "T: " << centigrade(ramp->get_T()) << "\td: " << d << "\ttot_rate: " << total_rate << "\t";
 	vector<double> result;
@@ -422,6 +451,5 @@ void Local::test(int seed, double T, int d) {
 	}
 	cout << "\n";
 }
-
-
+*/
 

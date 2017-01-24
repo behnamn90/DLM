@@ -37,7 +37,28 @@ int main(int argc, const char * argv[]) {
 		file_params.append(argv[i]);
 	}
 	local_a.run("Anneal"+file_params, seed);
-	local_mb.run("Melt"+file_params, seed);
+	//local_mb.run("Melt"+file_params, seed);
+	/*
+	G_half->update_embedding();
+	G_half->update_faces();
+	Embedding my_emb = G_half->faces;
+
+	//Embedding my_emb = G_half->emb;
+	int i = 0;
+	for (Embedding::iterator f = my_emb.begin(); f != my_emb.end(); ++f) {
+		cout << "face " << i << " has size " << (*f).size() << endl;  
+		for (Path::iterator e = (*f).begin(); e != (*f).end(); ++e) {
+			cout << (*e) << " ";
+		}
+		cout << endl;
+		i++;
+	}
+	Path myloop = G_half->select_face(17);
+	for (Path::iterator e = myloop.begin(); e != myloop.end(); ++e) {
+		cout << (*e) << " ";
+	}
+	cout << endl;
+	*/
 	delete constants;
 	delete G;
 	delete anneal;

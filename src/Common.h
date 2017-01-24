@@ -27,6 +27,8 @@
 using namespace std;
 using namespace boost;
 
+
+
 template <class Graph> void print(Graph& g) {
 	typename Graph::vertex_iterator i, end;
 	typename Graph::out_edge_iterator ei, edge_end;
@@ -60,13 +62,6 @@ struct edge_output_visitor : public output_visitor {
 		cout << e << " "; 
 	}
 };
-template <class Graph, class edge_matrix> void planar_embedding(Graph& g, edge_matrix& embedding) {
-	cout << "Testing for planarity: ";
-	if (boyer_myrvold_planarity_test(boyer_myrvold_params::graph = g,boyer_myrvold_params::embedding = &embedding[0]))
-		cout << "input graph is planar." << endl;
-	else
-		cout << "input graph is not planar." << endl;
-}
 
 template <class T> void print_vec(vector<T> &vec){
 	for (int i=0; i<vec.size(); i++){
@@ -121,3 +116,36 @@ double minutes(double seconds) {
 double Cpm2spC (double Cpm){
 	return 1. / (Cpm / 60.);
 }
+
+
+
+
+
+
+
+
+/*
+struct face_counter : public planar_face_traversal_visitor {
+	face_counter() : count(0) {}
+	void begin_face() { ++count; }
+	int count;
+};
+struct output_visitor : public planar_face_traversal_visitor {
+	void begin_face() { cout << "New face: "; }
+	void end_face() { cout << endl; }
+};
+struct vertex_output_visitor : public output_visitor {
+	template <typename Vertex> 
+	void next_vertex(Vertex v) 
+	{ 
+		cout << v << " "; 
+	}
+};
+struct edge_output_visitor : public output_visitor {
+	template <typename Edge> 
+	void next_edge(Edge e) 
+	{ 
+		cout << e << " "; 
+	}
+};
+*/

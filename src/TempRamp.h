@@ -79,7 +79,6 @@ class AnnealMelt: public TempRamp{
 	public:
 		AnnealMelt(double T_start_, double T_end_, double cool_rate_, int n_cycles_);
 		void _fill_ramp();
-
 };
 AnnealMelt::AnnealMelt(double T_start_, double T_end_, double cool_rate_, int n_cycles_){
 	current_t = 0.;
@@ -116,7 +115,6 @@ class Anneal: public TempRamp{
 	public:
 		Anneal(double T_start_, double T_end_, double cool_rate_, int n_cycles_);
 		void _fill_ramp();
-
 };
 Anneal::Anneal(double T_start_, double T_end_, double cool_rate_, int n_cycles_=1){
 	current_t = 0.;
@@ -146,7 +144,6 @@ class Melt: public TempRamp{
 	public:
 		Melt(double T_start_, double T_end_, double cool_rate_, int n_cycles_);
 		void _fill_ramp();
-
 };
 Melt::Melt(double T_start_, double T_end_, double cool_rate_, int n_cycles_=1){
 	current_t = 0.;
