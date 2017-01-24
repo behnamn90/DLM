@@ -1,3 +1,4 @@
+
 class Simulation{
 	public:
 		//Simulation(Constants *constants_, MyGraph *G_, TempRamp *ramp_);
@@ -15,6 +16,22 @@ class Simulation{
 		void print_rates();
 		double calc_tot_rate();
 };
+
+class Local: public Simulation{
+	public:
+		Local(Constants *constants_, MyGraph *G_, TempRamp *ramp_);
+		~Local(){}
+
+		double dG_shape(Crossover &crossover);
+		vector<double> calc_rate(int d);
+		vector<int> affected;
+		void fill_rates();
+		void run(string filename_, int seed);
+		//void test(int seed, double T);
+		//void test(int seed, double T, int d);
+};
+
+
 double Simulation::dG_duplex(Domain &domain) {
 	double result;
 	double dH = 0.;
@@ -82,19 +99,6 @@ double Simulation::calc_tot_rate(){
 	return result;
 }
 
-class Local: public Simulation{
-	public:
-		Local(Constants *constants_, MyGraph *G_, TempRamp *ramp_);
-		~Local(){}
-
-		double dG_shape(Crossover &crossover);
-		vector<double> calc_rate(int d);
-		vector<int> affected;
-		void fill_rates();
-		void run(string filename_, int seed);
-		//void test(int seed, double T);
-		//void test(int seed, double T, int d);
-};
 Local::Local(Constants *constants_, MyGraph *G_, TempRamp *ramp_){
 	ramp = ramp_;
 	constants = constants_;
@@ -256,10 +260,6 @@ void Local::run(string filename_, int seed) {
 	}
 	change_file.close();
 }
-
-
-
-
 
 
 

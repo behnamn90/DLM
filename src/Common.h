@@ -28,7 +28,6 @@ using namespace std;
 using namespace boost;
 
 
-
 template <class Graph> void print(Graph& g) {
 	typename Graph::vertex_iterator i, end;
 	typename Graph::out_edge_iterator ei, edge_end;
@@ -111,13 +110,28 @@ double seconds(double minutes) {
 	return minutes * 60.;
 }
 double minutes(double seconds) {
-	return seconds / 60.;
+	return (seconds / 60.);
 }
 double Cpm2spC (double Cpm){
 	return 1. / (Cpm / 60.);
 }
 
 
+/*
+template <class T> void print_vec(vector<T> &vec);
+void print_matrix(vector< vector<double> >& matrix);
+void write_matrix(vector< vector<double> >& matrix);
+void copy_vec(int *a, const int *b, int b_size);
+
+double sum_elements(vector<double>& v);
+
+double kelvin(double C);
+double centigrade(double K);
+
+double seconds(double minutes);
+double minutes(double seconds);
+double Cpm2spC (double Cpm);
+*/
 
 
 
