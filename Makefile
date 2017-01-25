@@ -5,7 +5,7 @@ ODIR=./bin/
 EXECUTABLE=$(ODIR)DLM
 SDIR=./src/
 
-all: $(EXECUTABLE)
+#all: $(EXECUTABLE)
 
 DEPS = $(SDIR)Common.h $(SDIR)MyGraph.h $(SDIR)TempRamp.h $(SDIR)Constants.h $(SDIR)Design.h $(SDIR)Simulation.h
 
