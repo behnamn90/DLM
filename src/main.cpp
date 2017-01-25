@@ -25,8 +25,8 @@ int main(int argc, const char * argv[]) {
 		if (i%2==0){G_half->make_transition(i,true);}
 	}
 	for (int i=0; i<166; i++){G_full->make_transition(i,true);}
-	Melt *melt = new Melt(40.,100.,Cpm2spC(arguments[4]));
-	Anneal *anneal = new Anneal(100.,40.,Cpm2spC(arguments[4]));
+	Melt *melt = new Melt(40.,100.,Cpm2spC(arguments[4]),1);
+	Anneal *anneal = new Anneal(100.,40.,Cpm2spC(arguments[4]),1);
 	
 	Local local_a = Local(constants, G, anneal);
 	Local local_mb = Local(constants, G_full, melt);
@@ -66,18 +66,4 @@ int main(int argc, const char * argv[]) {
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
