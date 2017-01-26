@@ -10,15 +10,16 @@
 
 #include "Headers.h"
 
-template <class T> void print_vec(vector<T> &vec){
-	for (int i=0; i<vec.size(); i++){
-			cout << i << "\t" << vec[i] << "\n";
-	}
-}
 void print_matrix(vector< vector<double> >&);
 void write_matrix(vector< vector<double> >&);
-void copy_vec(int*, const int*, int);
 
+template <class T> void print_vec(vector<T> &vec){
+	for (int i=0; i<vec.size(); i++){
+		cout << i << "\t" << vec[i] << "\n";
+	}
+}
+//template <class T> void print_vec(vector<T> &);
+void copy_vec(int*, const int*, int);
 double sum_elements(vector<double>&);
 
 double kelvin(double);
@@ -26,6 +27,7 @@ double centigrade(double);
 
 double seconds(double);
 double minutes(double);
+
 double Cpm2spC(double);
 
 #endif

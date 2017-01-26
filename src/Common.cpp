@@ -26,12 +26,12 @@ void write_matrix(vector< vector<double> >& matrix){
 	}
 	myfile.close();
 }
+
 void copy_vec(int *a, const int *b, int b_size){
      if(b_size == 0) return;    
      *a = *b;
      copy_vec(++a, ++b, b_size-1);
 }
-
 double sum_elements(vector<double>& v) {
 	double sum_of_elems = 0.;
 	for(vector<double>::iterator it = v.begin(); it != v.end(); ++it)
@@ -52,6 +52,7 @@ double seconds(double minutes) {
 double minutes(double seconds) {
 	return (seconds / 60.);
 }
+
 double Cpm2spC(double Cpm){
 	return 1. / (Cpm / 60.);
 }
