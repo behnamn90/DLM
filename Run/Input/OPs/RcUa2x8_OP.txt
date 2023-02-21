@@ -1,0 +1,102 @@
+{
+	OP_t = 3
+	Name = Staples
+	Pool = 0
+	Set = [ 0 1 2 3 4 5 6 7 ]
+}
+{
+	OP_t = 2
+	Name = Crossover
+	Pool = 0
+	Set = [ 0 1 2 3 4 5 6 7 ]
+}
+{
+	OP_t = 1
+	Name = Edge_Domains
+	Pool = 0
+	Set = [ 6 7 14 15 ]
+}
+{
+	OP_t = 2
+	Name = Outside_Cross
+	Pool = 0
+	Set = [ 0 1 2 3 4 5 6 7 ]
+}
+{
+	OP_t = 4
+	Name = Helix
+	Pool = 0
+	Set = [ 0 1 ]
+}
+{
+	OP_t = 2
+	Name = Column_15
+	Pool = 0
+	Set = [ 6 ]
+}
+{
+	OP_t = 2
+	Name = Column_31
+	Pool = 0
+	Set = [ 5 ]
+}
+{
+	OP_t = 2
+	Name = Column_47
+	Pool = 0
+	Set = [ 4 ]
+}
+{
+	OP_t = 2
+	Name = Column_63
+	Pool = 0
+	Set = [ 3 ]
+}
+{
+	OP_t = 2
+	Name = Column_64
+	Pool = 0
+	Set = [ 2 ]
+}
+{
+	OP_t = 2
+	Name = Column_80
+	Pool = 0
+	Set = [ 1 ]
+}
+{
+	OP_t = 2
+	Name = Column_96
+	Pool = 0
+	Set = [ 0 ]
+}
+{
+	OP_t = 2
+	Name = Column_112
+	Pool = 0
+	Set = [ 7 ]
+}
+{
+	OP_t = 1
+	Name = Row_1
+	Pool = 0
+	Set = [ 6 5 4 3 2 1 0 15 ]
+}
+{
+	OP_t = 1
+	Name = Row_2
+	Pool = 0
+	Set = [ 7 8 9 10 11 12 13 14 ]
+}
+{
+	OP_t = 7
+	Name = CrossPairs
+	Pool = 0
+	Set = [ 0 ]
+}
+{
+	OP_t = 7
+	Name = Outside_CrossPairs
+	Pool = 0
+	Set = [ 0 ]
+}

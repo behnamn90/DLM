@@ -1,0 +1,46 @@
+*******************************************************************
+**************************** Compiling ****************************
+*******************************************************************
+
+*************************** Using CMake ***************************
+************************** (recommended) **************************
+
+To use cmake, do:
+>> mkdir build
+>> cd build
+>> cmake ..
+If you would like to use a different compiler, use the following instead of the last step:
+>> cmake -DCMAKE_CXX_COMPILER=/path/to/compiler ..
+
+One cmake is finished creating a Makefile, do:
+>> make
+
+This creates an excecutable <path/to/DLM>/build/exe/DLM
+
+**************************** Using make ***************************
+************************ (MacOS/Linux only) ***********************
+
+Create an empty <DLM>/bin/ directory:
+>> mkdir bin
+
+Adjust paths in Makefile and from <path/to/DLM>, do:
+>> make
+
+This creates an executable <path/to/DLM>/bin/DLM
+
+*******************************************************************
+*************************** Dependencies **************************
+*******************************************************************
+
+The boost::graph and boost::random libraries are used heavily.
+
+Best option is installing boost using homebrew or a similar package manager so that CMake can find the library.
+
+
+*******************************************************************
+****************************** Tests ******************************
+*******************************************************************
+
+I have tested the package on using g++-8, g++-10 and Apple CLang.
+I have tested the following versions of Boost:
+boost@1.61, boost@1.66 and boost@1.74 (recommended with cmake).

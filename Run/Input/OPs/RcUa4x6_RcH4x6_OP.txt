@@ -1,0 +1,150 @@
+{
+	OP_t = 3
+	Name = Staples
+	Pool = 0
+	Set = [ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ]
+}
+{
+	OP_t = 2
+	Name = Crossover
+	Pool = 0
+	Set = [ 0 1 2 3 4 5 6 7 ]
+}
+{
+	OP_t = 1
+	Name = Seam_Domains
+	Pool = 0
+	Set = [ 7 8 19 20 ]
+}
+{
+	OP_t = 1
+	Name = Edge_Domains
+	Pool = 0
+	Set = [ 4 5 10 11 16 17 22 23 ]
+}
+{
+	OP_t = 3
+	Name = SingleDom_Staples
+	Pool = 0
+	Set = [ 0 1 2 3 9 10 11 12 ]
+}
+{
+	OP_t = 3
+	Name = DoubleDom_Staples
+	Pool = 0
+	Set = [ 4 5 6 7 8 13 14 15 ]
+}
+{
+	OP_t = 2
+	Name = Inside_Cross
+	Pool = 0
+	Set = [ 0 4 5 7 ]
+}
+{
+	OP_t = 2
+	Name = Outside_Cross
+	Pool = 0
+	Set = [ 1 6 ]
+}
+{
+	OP_t = 2
+	Name = Seam_Cross
+	Pool = 0
+	Set = [ 2 3 ]
+}
+{
+	OP_t = 4
+	Name = Helix
+	Pool = 0
+	Set = [ 0 1 2 3 ]
+}
+{
+	OP_t = 5
+	Name = L_Helix
+	Pool = 0
+	Set = [ 0 1 2 3 ]
+}
+{
+	OP_t = 6
+	Name = R_Helix
+	Pool = 0
+	Set = [ 0 1 2 3 ]
+}
+{
+	OP_t = 4
+	Name = Helix
+	Pool = 0
+	Set = [ 1 2 ]
+}
+{
+	OP_t = 1
+	Name = Left_Domains
+	Pool = 0
+	Set = [ 2 3 4 5 6 7 8 9 10 11 12 13 ]
+}
+{
+	OP_t = 1
+	Name = Right_Domains
+	Pool = 0
+	Set = [ 0 1 14 15 16 17 18 19 20 21 22 23 ]
+}
+{
+	OP_t = 2
+	Name = Column_15
+	Pool = 0
+	Set = [ 0 4 ]
+}
+{
+	OP_t = 2
+	Name = Column_31
+	Pool = 0
+	Set = [ 1 ]
+}
+{
+	OP_t = 2
+	Name = Column_64
+	Pool = 0
+	Set = [ 6 ]
+}
+{
+	OP_t = 2
+	Name = Column_80
+	Pool = 0
+	Set = [ 5 7 ]
+}
+{
+	OP_t = 1
+	Name = Row_1
+	Pool = 0
+	Set = [ 4 3 2 1 0 23 ]
+}
+{
+	OP_t = 1
+	Name = Row_2
+	Pool = 0
+	Set = [ 5 6 7 20 21 22 ]
+}
+{
+	OP_t = 1
+	Name = Row_3
+	Pool = 0
+	Set = [ 10 9 8 19 18 17 ]
+}
+{
+	OP_t = 1
+	Name = Row_4
+	Pool = 0
+	Set = [ 11 12 13 14 15 16 ]
+}
+{
+	OP_t = 7
+	Name = CrossPairs
+	Pool = 0
+	Set = [ 0 ]
+}
+{
+	OP_t = 7
+	Name = Seam_CrossPairs
+	Pool = 0
+	Set = [ 0 ]
+}

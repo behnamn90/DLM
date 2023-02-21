@@ -1,0 +1,9 @@
+**************************** Running ****************************
+
+To run from command line, copy the DLM executable here and do:
+
+>> ./DLM input.txt
+
+This will run a sample trajectory based on input parameters.
+There are many other topologies and order parameter files in the Input folder.
+The JSON files are also included to view using cadnano.
